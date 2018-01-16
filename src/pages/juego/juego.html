@@ -17,23 +17,28 @@
   <ion-grid>
     <ion-row>
       <ion-col col-3></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(8)">{{salida[0][0]}}</button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(3)">{{salida[0][1]}}</button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(4)">{{salida[0][2]}}</button></ion-col>
       <ion-col col-3></ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-3></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(1)">{{salida[1][0]}}</button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(5)">{{salida[1][1]}}</button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(9)">{{salida[1][2]}}</button></ion-col>
       <ion-col col-3></ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-3></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
-      <ion-col col-2><button ion-button color="light" col-12></button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(6)">{{salida[2][0]}}</button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(7)">{{salida[2][1]}}</button></ion-col>
+      <ion-col col-2><button ion-button color="light" col-12 (click)="jugarPersona(2)">{{salida[2][2]}}</button></ion-col>
+      <ion-col col-3></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-3></ion-col>
+      <ion-col col-6><button ion-button color="secondary" col-12 (click)="NoPerderSiPuedes()">JUGAR</button></ion-col>
       <ion-col col-3></ion-col>
     </ion-row>
   </ion-grid>
