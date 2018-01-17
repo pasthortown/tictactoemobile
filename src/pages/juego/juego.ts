@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 /**
  * Generated class for the JuegoPage page.
@@ -13,7 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-juego',
   templateUrl: 'juego.html',
 })
-export class JuegoPage {
+export class JuegoPage implements OnInit {
   dificultad: number;
   tablero: number[][] = [[0,0,0],
                          [0,0,0],
@@ -34,147 +35,135 @@ export class JuegoPage {
 
   }
 
+  ngOnInit() {
+    this.dificultad = 0;
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad JuegoPage');
   }
 
-  jugarPersona(posicion: number) {
-    switch (posicion) {
-      case 1:
-        if (this.tablero[1][0] != 0) {
-          return;
-        }
-        this.tablero[1][0] = 5
-        this.cuadradoMagico[1][0] = 1;
-        this.salida[1][0] = "o";
-        break;
-      case 2:
-        if (this.tablero[2][2] != 0) {
-          return;
-        }
-        this.tablero[2][2] = 5
-        this.cuadradoMagico[2][2] = 2;
-        this.salida[2][2] = "o";
-        break;
-      case 3:
-        if (this.tablero[0][1] != 0) {
-          return;
-        }
-        this.tablero[0][1] = 5;
-        this.cuadradoMagico[0][1] = 3;
-        this.salida[0][1] = "o";
-        break;
-      case 4:
-        if (this.tablero[0][2] != 0) {
-          return;
-        }
-        this.tablero[0][2] = 5;
-        this.cuadradoMagico[0][2] = 4;
-        this.salida[0][2] = "o";
-        break;
-      case 5:
-        if (this.tablero[1][1] != 0) {
-          return;
-        }
-        this.tablero[1][1] = 5;
-        this.cuadradoMagico[1][1] = 5;
-        this.salida[1][1] = "o";
-        break;
-      case 6:
-        if (this.tablero[2][0] != 0) {
-          return;
-        }
-        this.tablero[2][0] = 5;
-        this.cuadradoMagico[2][0] = 6;
-        this.salida[2][0] = "o";
-        break;
-      case 7:
-        if (this.tablero[2][1] != 0) {
-          return;
-        }
-        this.tablero[2][1] = 5;
-        this.cuadradoMagico[2][1] = 7;
-        this.salida[2][1] = "o";
-        break;
-      case 8:
-        if (this.tablero[0][0] != 0) {
-          return;
-        }
-        this.tablero[0][0] = 5;
-        this.cuadradoMagico[0][0] = 8;
-        this.salida[0][0] = "o";
-        break;
-      case 9:
-        if (this.tablero[1][2] != 0) {
-          return;
-        }
-        this.tablero[1][2] = 5;
-        this.cuadradoMagico[1][2] = 9;
-        this.salida[1][2] = "o";
-        break;
+  sortearPrimerTurno() {
+    let iniciaPC = false;
+    if ( Math.floor(Math.random() * 10) % 2 ){
+      iniciaPC = true;
     }
+    if( iniciaPC ) {
+      return this.jugarAzar();
+    }
+    return false;
   }
 
-  jugar(posicion: number) {
+  reiniciar() {
+    this.tablero = [[0,0,0],
+                    [0,0,0],
+                    [0,0,0]];
+    this.cuadradoMagico = [[0,0,0],
+                           [0,0,0],
+                           [0,0,0]];
+    this.salida = [[' ',' ', ' '],
+                   [' ',' ', ' '],
+                   [' ',' ', ' ']];
+    this.sortearPrimerTurno();
+  }
+
+  tomarPosicion(posicion: number, fichaJuego: string, valorFichaTablero: number) {
     if( posicion == 0 ){
       return false;
     }
     switch (posicion) {
       case 1:
-        this.tablero[1][0] = 1;
+        if (this.tablero[1][0] != 0) {
+          return false;
+        }
+        this.tablero[1][0] = valorFichaTablero;
         this.cuadradoMagico[1][0] = 1;
-        this.salida[1][0] = "x";
+        this.salida[1][0] = fichaJuego;
         break;
       case 2:
-        this.tablero[2][2] = 1;
+        if (this.tablero[2][2] != 0) {
+          return false;
+        }
+        this.tablero[2][2] = valorFichaTablero;
         this.cuadradoMagico[2][2] = 2;
-        this.salida[2][2] = "x";
+        this.salida[2][2] = fichaJuego;
         break;
       case 3:
-        this.tablero[0][1] = 1;
+        if (this.tablero[0][1] != 0) {
+          return false;
+        }
+        this.tablero[0][1] = valorFichaTablero;
         this.cuadradoMagico[0][1] = 3;
-        this.salida[0][1] = "x";
+        this.salida[0][1] = fichaJuego;
         break;
       case 4:
-        this.tablero[0][2] = 1;
+        if (this.tablero[0][2] != 0) {
+          return false;
+        }
+        this.tablero[0][2] = valorFichaTablero;
         this.cuadradoMagico[0][2] = 4;
-        this.salida[0][2] = "x";
+        this.salida[0][2] = fichaJuego;
         break;
       case 5:
-        this.tablero[1][1] = 1;
+        if (this.tablero[1][1] != 0) {
+          return false;
+        }
+        this.tablero[1][1] = valorFichaTablero;
         this.cuadradoMagico[1][1] = 5;
-        this.salida[1][1] = "x";
+        this.salida[1][1] = fichaJuego;
         break;
       case 6:
-        this.tablero[2][0] = 1;
+        if (this.tablero[2][0] != 0) {
+          return false;
+        }
+        this.tablero[2][0] = valorFichaTablero;
         this.cuadradoMagico[2][0] = 6;
-        this.salida[2][0] = "x";
+        this.salida[2][0] = fichaJuego;
         break;
       case 7:
-        this.tablero[2][1] = 1;
+        if (this.tablero[2][1] != 0) {
+          return false;
+        }
+        this.tablero[2][1] = valorFichaTablero;
         this.cuadradoMagico[2][1] = 7;
-        this.salida[2][1] = "x";
+        this.salida[2][1] = fichaJuego;
         break;
       case 8:
-        this.tablero[0][0] = 1;
+        if (this.tablero[0][0] != 0) {
+          return false;
+        }
+        this.tablero[0][0] = valorFichaTablero;
         this.cuadradoMagico[0][0] = 8;
-        this.salida[0][0] = "x";
+        this.salida[0][0] = fichaJuego;
         break;
       case 9:
-        this.tablero[1][2] = 1;
+        if (this.tablero[1][2] != 0) {
+          return false;
+        }
+        this.tablero[1][2] = valorFichaTablero;
         this.cuadradoMagico[1][2] = 9;
-        this.salida[1][2] = "x";
+        this.salida[1][2] = fichaJuego;
         break;
     }
     return true;
   }
 
+  jugarPersona(posicion: number) {
+    if (this.tomarPosicion(posicion, 'o', 5)){
+      this.turnoPC();
+    }
+  }
+
+  jugarPC(posicion: number) {
+    return this.tomarPosicion(posicion, 'x', 1);
+  }
+
   GanaSiPuedes() {
-    this.jugar(this.siguienteJugadaGanaONoPierdas(1));
+    return this.jugarPC(this.siguienteJugadaGanaONoPierdas(1));
   }
 
   NoPerderSiPuedes() {
-    this.jugar(this.siguienteJugadaGanaONoPierdas(5));
+    return this.jugarPC(this.siguienteJugadaGanaONoPierdas(5));
   }
 
   siguienteJugadaGanaONoPierdas(fichaPorValidar:number) {
@@ -255,6 +244,134 @@ export class JuegoPage {
         }
       }
     }
-    return this.jugar(libres[Math.floor(Math.random() * (libres.length - 1))]);
+    let toReturn = libres[Math.floor(Math.random() * (libres.length - 1))];
+    if( toReturn == null) {
+      toReturn = 0;
+    }
+    return this.jugarPC(toReturn);
+  }
+
+  verificarPrioridades() {
+    if ( this.tomarCentro() ) {
+      return true;
+    }
+    return this.tomarEsquina();
+  }
+
+  tomarCentro() {
+    return this.tomarPosicion(5, 'x', 1);
+  }
+
+  tomarEsquina() {
+    let libres = [];
+    if ( this.tablero[0][0]==0 ){
+      libres.push(8);
+    }
+    if ( this.tablero[0][2]==0 ){
+      libres.push(4);
+    }
+    if ( this.tablero[2][0]==0 ){
+      libres.push(6);
+    }
+    if ( this.tablero[2][2]==0 ){
+      libres.push(2);
+    }
+    let toReturn = libres[Math.floor(Math.random() * (libres.length - 1))];
+    if( toReturn == null) {
+      toReturn = 0;
+    }
+    return this.jugarPC(toReturn);
+  }
+
+  tomarMedios() {
+    let libres = [];
+    if ( this.tablero[0][1]==0 ){
+      libres.push(3);
+    }
+    if ( this.tablero[1][0]==0 ){
+      libres.push(1);
+    }
+    if ( this.tablero[1][2]==0 ){
+      libres.push(9);
+    }
+    if ( this.tablero[2][1]==0 ){
+      libres.push(7);
+    }
+    let toReturn = libres[Math.floor(Math.random() * (libres.length - 1))];
+    if( toReturn == null) {
+      toReturn = 0;
+    }
+    return this.jugarPC(toReturn);
+  }
+
+  cuidarEsquinas() {
+    if ( ( this.tablero[0][0] == 5 && this.tablero[2][2] == 5 ) || ( this.tablero[0][2] == 5 && this.tablero[2][0] == 5 ) ) {
+      return this.tomarMedios();
+    }
+    return false;
+  }
+
+  muy_facil() {
+    if ( this.GanaSiPuedes() ){
+      return true;
+    }
+    return this.jugarAzar();
+  }
+
+  facil() {
+    if ( this.GanaSiPuedes() ){
+      return true;
+    }
+    if ( this.NoPerderSiPuedes() ){
+      return true;
+    }
+    return this.jugarAzar();
+  }
+
+  media() {
+    if ( this.GanaSiPuedes() ){
+      return true;
+    }
+    if ( this.NoPerderSiPuedes() ){
+      return true;
+    }
+    if ( this.verificarPrioridades() ){
+      return true;
+    }
+    return this.jugarAzar();
+  }
+
+  dificil() {
+    if ( this.GanaSiPuedes() ){
+      return true;
+    }
+    if ( this.NoPerderSiPuedes() ){
+      return true;
+    }
+    if ( this.cuidarEsquinas() ){
+      return true;
+    }
+    if ( this.verificarPrioridades() ){
+      return true;
+    }
+    return this.jugarAzar();
+  }
+
+  turnoPC() {
+    if (this.dificultad == 0) {
+      this.muy_facil();
+    }
+
+    if (this.dificultad == 1) {
+      this.facil();
+    }
+
+    if (this.dificultad == 2) {
+      this.media();
+    }
+
+    if (this.dificultad == 3) {
+      this.dificil();
+    }
   }
 }
