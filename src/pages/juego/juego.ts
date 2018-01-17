@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the JuegoPage page.
@@ -31,7 +32,7 @@ export class JuegoPage implements OnInit {
                         [' ',' ', ' ']];
   // PERSONA JUEGA CON EL 5
   // COMPUTADORA JUEGA CON EL 1
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
 
   }
 
@@ -39,8 +40,107 @@ export class JuegoPage implements OnInit {
     this.dificultad = 0;
   }
 
+  showAlert(mensaje: string, titulo: string) {
+    let alert = this.alertCtrl.create({
+      title: titulo,
+      subTitle: mensaje,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad JuegoPage');
+  }
+
+  buscarGanador() {
+    if (this.verificarGanador(1) != 0){
+      this.showAlert('Gané', 'BUEN INTENTO');
+      return true;
+    }
+    if (this.verificarGanador(5) != 0){
+      this.showAlert('Ganaste', 'FELICIDADES');
+      return true;
+    }
+
+    if (!this.verificarLibres()){
+      this.showAlert('EMPATE', 'BUEN INTENTO');
+      return true;
+    }
+    return false;
+  }
+
+  verificarLibres() {
+    let libres = [];
+    let jugadas = [[8,3,4],
+                   [1,5,9],
+                   [6,7,2]];
+    for( let i = 0 ; i<3 ; i++ ) {
+      for( let j = 0 ; j<3 ; j++ ) {
+        if( this.tablero[i][j]==0 ) {
+          libres.push(jugadas[i][j]);
+        }
+      }
+    }
+    if (libres.length == 0){
+      return false;
+    }
+    return true;
+  }
+
+  verificarGanador(fichaPorValidar: number) {
+    let ganador = this.verificarGanadorColumnas(fichaPorValidar);
+    if ( ganador == 0 ) {
+      ganador = this.verificarGanadorFilas(fichaPorValidar);
+    }
+    if ( ganador == 0 ) {
+      ganador = this.verificarGanadorDiagonales(fichaPorValidar);
+    }
+    return ganador;
+  }
+
+  verificarGanadorFilas(fichaPorValidar: number) {
+    for( let i = 0 ; i<3 ; i++ ) {
+      let sumaTablero = 0;
+      for( let j = 0 ; j<3 ; j++) {
+        sumaTablero += this.tablero[i][j];
+      }
+      if ( sumaTablero == fichaPorValidar*3 ) {
+        return fichaPorValidar;
+      }
+    }
+    return 0;
+  }
+
+  verificarGanadorColumnas(fichaPorValidar: number) {
+    for( let j = 0 ; j<3 ; j++ ) {
+      let sumaTablero = 0;
+      for( let i = 0 ; i<3 ; i++) {
+        sumaTablero += this.tablero[i][j];
+      }
+      if ( sumaTablero == fichaPorValidar*3 ) {
+        return fichaPorValidar;
+      }
+    }
+    return 0;
+  }
+
+  verificarGanadorDiagonales(fichaPorValidar:number) {
+    let sumaTablero = 0;
+    for( let i = 0 ; i<3 ; i++ ) {
+      sumaTablero += this.tablero[i][i];
+      if ( sumaTablero == fichaPorValidar*3 ) {
+        return fichaPorValidar;
+      }
+    }
+    sumaTablero = 0;
+    for( let i = 0 ; i<3 ; i++ ) {
+      sumaTablero += this.tablero[2-i][i];
+      if ( sumaTablero == fichaPorValidar*3 ) {
+        return fichaPorValidar;
+      }
+    }
+    return 0;
   }
 
   sortearPrimerTurno() {
@@ -49,7 +149,7 @@ export class JuegoPage implements OnInit {
       iniciaPC = true;
     }
     if( iniciaPC ) {
-      return this.jugarAzar();
+      return this.turnoPC();
     }
     return false;
   }
@@ -144,6 +244,9 @@ export class JuegoPage implements OnInit {
         this.cuadradoMagico[1][2] = 9;
         this.salida[1][2] = fichaJuego;
         break;
+    }
+    if (this.buscarGanador()) {
+      this.reiniciar();
     }
     return true;
   }
