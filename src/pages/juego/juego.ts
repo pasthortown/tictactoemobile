@@ -17,6 +17,7 @@ import { AlertController } from 'ionic-angular';
 })
 export class JuegoPage implements OnInit {
   dificultad: number;
+  hayganador: boolean;
   tablero: number[][] = [[0,0,0],
                          [0,0,0],
                          [0,0,0]];
@@ -245,15 +246,15 @@ export class JuegoPage implements OnInit {
         this.salida[1][2] = fichaJuego;
         break;
     }
-    if (this.buscarGanador()) {
-      this.reiniciar();
-    }
+    this.hayganador = this.buscarGanador();
     return true;
   }
 
   jugarPersona(posicion: number) {
-    if (this.tomarPosicion(posicion, 'o', 5)){
-      this.turnoPC();
+    if( !this.hayganador ){
+      if (this.tomarPosicion(posicion, 'o', 5)){
+        this.turnoPC();
+      }
     }
   }
 
