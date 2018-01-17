@@ -38,10 +38,10 @@ export class JuegoPage {
     console.log('ionViewDidLoad JuegoPage');
   }
 
-  jugarPersona(posicion: number){
+  jugarPersona(posicion: number) {
     switch (posicion) {
       case 1:
-        if (this.tablero[1][0] != 0){
+        if (this.tablero[1][0] != 0) {
           return;
         }
         this.tablero[1][0] = 5
@@ -49,7 +49,7 @@ export class JuegoPage {
         this.salida[1][0] = "o";
         break;
       case 2:
-        if (this.tablero[2][2] != 0){
+        if (this.tablero[2][2] != 0) {
           return;
         }
         this.tablero[2][2] = 5
@@ -57,7 +57,7 @@ export class JuegoPage {
         this.salida[2][2] = "o";
         break;
       case 3:
-        if (this.tablero[0][1] != 0){
+        if (this.tablero[0][1] != 0) {
           return;
         }
         this.tablero[0][1] = 5;
@@ -65,7 +65,7 @@ export class JuegoPage {
         this.salida[0][1] = "o";
         break;
       case 4:
-        if (this.tablero[0][2] != 0){
+        if (this.tablero[0][2] != 0) {
           return;
         }
         this.tablero[0][2] = 5;
@@ -73,7 +73,7 @@ export class JuegoPage {
         this.salida[0][2] = "o";
         break;
       case 5:
-        if (this.tablero[1][1] != 0){
+        if (this.tablero[1][1] != 0) {
           return;
         }
         this.tablero[1][1] = 5;
@@ -81,7 +81,7 @@ export class JuegoPage {
         this.salida[1][1] = "o";
         break;
       case 6:
-        if (this.tablero[2][0] != 0){
+        if (this.tablero[2][0] != 0) {
           return;
         }
         this.tablero[2][0] = 5;
@@ -89,7 +89,7 @@ export class JuegoPage {
         this.salida[2][0] = "o";
         break;
       case 7:
-        if (this.tablero[2][1] != 0){
+        if (this.tablero[2][1] != 0) {
           return;
         }
         this.tablero[2][1] = 5;
@@ -97,7 +97,7 @@ export class JuegoPage {
         this.salida[2][1] = "o";
         break;
       case 8:
-        if (this.tablero[0][0] != 0){
+        if (this.tablero[0][0] != 0) {
           return;
         }
         this.tablero[0][0] = 5;
@@ -105,7 +105,7 @@ export class JuegoPage {
         this.salida[0][0] = "o";
         break;
       case 9:
-        if (this.tablero[1][2] != 0){
+        if (this.tablero[1][2] != 0) {
           return;
         }
         this.tablero[1][2] = 5;
@@ -115,7 +115,10 @@ export class JuegoPage {
     }
   }
 
-  jugar(posicion: number){
+  jugar(posicion: number) {
+    if( posicion == 0 ){
+      return false;
+    }
     switch (posicion) {
       case 1:
         this.tablero[1][0] = 1;
@@ -166,29 +169,29 @@ export class JuegoPage {
     return true;
   }
 
-  GanaSiPuedes(){
+  GanaSiPuedes() {
     this.jugar(this.siguienteJugadaGanaONoPierdas(1));
   }
 
-  NoPerderSiPuedes(){
+  NoPerderSiPuedes() {
     this.jugar(this.siguienteJugadaGanaONoPierdas(5));
   }
 
-  siguienteJugadaGanaONoPierdas(fichaPorValidar:number){
+  siguienteJugadaGanaONoPierdas(fichaPorValidar:number) {
     let siguienteJugada = 0;
     siguienteJugada = this.validarFilas(fichaPorValidar);
-    if( siguienteJugada != 0){
+    if( siguienteJugada != 0) {
       return siguienteJugada;
     }
     siguienteJugada = this.validarColumnas(fichaPorValidar);
-    if( siguienteJugada != 0){
+    if( siguienteJugada != 0) {
       return siguienteJugada;
     }
     siguienteJugada = this.validarDiagonales(fichaPorValidar);
     return siguienteJugada;
   }
 
-  validarFilas(fichaPorValidar:number){
+  validarFilas(fichaPorValidar:number) {
     for( let i = 0 ; i<3 ; i++ ) {
       let sumaTablero = 0;
       let sumaCuadradoMagico = 0;
@@ -196,14 +199,14 @@ export class JuegoPage {
         sumaTablero += this.tablero[i][j];
         sumaCuadradoMagico += this.cuadradoMagico[i][j];
       }
-      if ( sumaTablero == fichaPorValidar*2 ){
+      if ( sumaTablero == fichaPorValidar*2 ) {
         return 15 - sumaCuadradoMagico;
       }
     }
     return 0;
   }
 
-  validarColumnas(fichaPorValidar:number){
+  validarColumnas(fichaPorValidar:number) {
     for( let j = 0 ; j<3 ; j++ ) {
       let sumaTablero = 0;
       let sumaCuadradoMagico = 0;
@@ -211,20 +214,20 @@ export class JuegoPage {
         sumaTablero += this.tablero[i][j];
         sumaCuadradoMagico += this.cuadradoMagico[i][j];
       }
-      if ( sumaTablero == fichaPorValidar*2 ){
+      if ( sumaTablero == fichaPorValidar*2 ) {
         return 15 - sumaCuadradoMagico;
       }
     }
     return 0;
   }
 
-  validarDiagonales(fichaPorValidar:number){
+  validarDiagonales(fichaPorValidar:number) {
     let sumaTablero = 0;
     let sumaCuadradoMagico = 0;
     for( let i = 0 ; i<3 ; i++ ) {
       sumaTablero += this.tablero[i][i];
       sumaCuadradoMagico += this.cuadradoMagico[i][i];
-      if ( sumaTablero == fichaPorValidar*2 ){
+      if ( sumaTablero == fichaPorValidar*2 ) {
         return 15 - sumaCuadradoMagico;
       }
     }
@@ -233,10 +236,25 @@ export class JuegoPage {
     for( let i = 0 ; i<3 ; i++ ) {
       sumaTablero += this.tablero[2-i][i];
       sumaCuadradoMagico += this.cuadradoMagico[2-i][i];
-      if ( sumaTablero == fichaPorValidar*2 ){
+      if ( sumaTablero == fichaPorValidar*2 ) {
         return 15 - sumaCuadradoMagico;
       }
     }
     return 0;
+  }
+
+  jugarAzar() {
+    let libres = [];
+    let jugadas = [[8,3,4],
+                   [1,5,9],
+                   [6,7,2]];
+    for( let i = 0 ; i<3 ; i++ ) {
+      for( let j = 0 ; j<3 ; j++ ) {
+        if( this.tablero[i][j]==0 ) {
+          libres.push(jugadas[i][j]);
+        }
+      }
+    }
+    return this.jugar(libres[Math.floor(Math.random() * (libres.length - 1))]);
   }
 }
