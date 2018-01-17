@@ -165,6 +165,7 @@ export class JuegoPage implements OnInit {
     this.salida = [[' ',' ', ' '],
                    [' ',' ', ' '],
                    [' ',' ', ' ']];
+    this.hayganador = false;
     this.sortearPrimerTurno();
   }
 
@@ -259,7 +260,9 @@ export class JuegoPage implements OnInit {
   }
 
   jugarPC(posicion: number) {
-    return this.tomarPosicion(posicion, 'x', 1);
+    if( !this.hayganador ){
+      return this.tomarPosicion(posicion, 'x', 1);
+    }
   }
 
   GanaSiPuedes() {
