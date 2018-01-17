@@ -14,6 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'juego.html',
 })
 export class JuegoPage {
+  dificultad: number;
   tablero: number[][] = [[0,0,0],
                          [0,0,0],
                          [0,0,0]];
@@ -162,6 +163,7 @@ export class JuegoPage {
         this.salida[1][2] = "x";
         break;
     }
+    return true;
   }
 
   GanaSiPuedes(){
