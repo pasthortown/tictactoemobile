@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { JuegoPage } from '../juego/juego';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'page-home',
@@ -8,17 +9,27 @@ import { JuegoPage } from '../juego/juego';
 })
 export class HomePage {
   splash = true;
+  webServiceURL = 'https://www.reddit.com/r/gifs/top/.json?limit=10&sort=hot';
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController, public http: Http) {
   }
 
   ionViewDidLoad() {
     setTimeout(() => this.splash = false, 4000);
   }
 
+  getAll() {
+    this.http.get(this.webServiceURL)
+    .subscribe(respuesta => {
+      alert(JSON.stringify(respuesta.json().data.whitelist_status));
+    }, error => {
+      alert(JSON.stringify(error));
+    });
+  }
+
   login() {
     //EJECUTA COSAS DE LOGIN
+    this.getAll();
     this.navCtrl.push(JuegoPage);
   }
 }
