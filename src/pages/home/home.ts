@@ -9,7 +9,7 @@ import { Http } from '@angular/http';
 })
 export class HomePage {
   splash = true;
-  webServiceURL = 'https://www.reddit.com/r/gifs/top/.json?limit=10&sort=hot';
+  webServiceURL = 'http://localhost/sae/server/genero/leer';
 
   constructor(public navCtrl: NavController, public http: Http) {
   }
@@ -21,7 +21,7 @@ export class HomePage {
   getAll() {
     this.http.get(this.webServiceURL)
     .subscribe(respuesta => {
-      alert(JSON.stringify(respuesta.json().data.whitelist_status));
+      alert(JSON.stringify(respuesta.json()));
     }, error => {
       alert(JSON.stringify(error));
     });
